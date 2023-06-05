@@ -1,17 +1,25 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import avatar from '../../img/avatar.png'
 import { signout } from '../../utils/Icons'
 import { menuItems } from '../../utils/menuItems'
+import AuthUser from '../../context/AuthUser'
 
 function Navigation({active, setActive}) {
     
+    const {user} = AuthUser();
+    const { token,logout }= AuthUser();
+    const logoutUser = () => {
+        if (token !== undefined){
+            logout();
+        }
+    }
     return (
         <NavStyled>
             <div className="user-con">
                 <img src={avatar} alt="" />
                 <div className="text">
-                    <h2>Mike</h2>
+                    {/* <h2>{user.name}</h2> */}
                     <p>Your Money</p>
                 </div>
             </div>
@@ -28,7 +36,9 @@ function Navigation({active, setActive}) {
                 })}
             </ul>
             <div className="bottom-nav">
-                <li>
+                <li
+                onclick={logoutUser}
+                >
                     {signout} Sign Out
                 </li>
             </div>
